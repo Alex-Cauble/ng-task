@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
       username: '',
       password: '',
     });
+
     this.errors$ = this.auth.authErrors$;
   }
 

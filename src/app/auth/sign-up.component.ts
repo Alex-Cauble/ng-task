@@ -72,6 +72,7 @@ export class SignUpComponent implements OnInit {
       password: '',
       password2: '',
     });
+
     this.errors$ = this.auth.authErrors$;
   }
 
