@@ -12,7 +12,7 @@ import CredentialsDTO from './dto/Credentials.dto';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly API_AUTH_BASE = `${environment.API_AUTH_BASE}`;
+  private readonly API_AUTH_BASE = `${environment.API_URL}${environment.API_AUTH_BASE}`;
   private readonly TOKEN_KEY = 'ACCESS_TOKEN';
 
   private userSubject: BehaviorSubject<User | null>;
@@ -24,7 +24,6 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     this.userSubject = new BehaviorSubject<User | null>(null);
-
     this.user$ = this.userSubject.asObservable();
 
     this.authErrors = new BehaviorSubject<string[]>([]);
@@ -41,8 +40,15 @@ export class AuthService {
           const { username }: { username: string } = jwtDecode(accessToken);
           this.userSubject.next({ username });
         },
-        error: (err: Error) => {
-          console.log(err);
+        error: (err: any) => {
+          const { message } = err?.error;
+          if (message) {
+            this.authErrors.next(message);
+          }
+          this.authErrors.next([
+            'Unknown Error Occurred',
+            ...this.authErrors.value,
+          ]);
         },
       });
   }

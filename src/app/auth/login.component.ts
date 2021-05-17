@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   template: `
     <form [formGroup]="form" class="card p-6" (ngSubmit)="submit()">
+      <!-- <span style="font-size: 3em"><i class="fas fa-user"></i></span> -->
       <input
         formControlName="username"
         type="text"
@@ -27,28 +30,43 @@ import { FormBuilder, FormGroup } from '@angular/forms';
       :host {
         display: grid;
         place-items: center;
+        height: 100vh;
+      }
 
-        form {
-          display: grid;
-          flex-direction: column;
+      form {
+        display: flex;
+        flex-direction: column;
+      }
 
-          input {
-            margin-bottom: 20px;
-          }
+      .card {
+        margin-bottom: 20vh;
+      }
+
+      input {
+        margin-bottom: 20px;
+        &::placeholder {
+          text-transform: capitalize;
         }
       }
     `,
   ],
 })
-export class LoginComponent {
-  form: FormGroup = this.fb.group({
-    username: '',
-    password: '',
-  });
+export class LoginComponent implements OnInit {
+  form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  errors$!: Observable<string[]>;
+
+  constructor(private fb: FormBuilder, private auth: AuthService) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      username: '',
+      password: '',
+    });
+    this.errors$ = this.auth.authErrors$;
+  }
 
   submit(): void {
-    console.log(this.form.value);
+    this.auth.login(this.form.value);
   }
 }
