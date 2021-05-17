@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import jwtDecode from 'jwt-decode';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -12,6 +13,7 @@ import CredentialsDTO from './dto/Credentials.dto';
 })
 export class AuthService {
   private readonly API_AUTH_BASE = `${environment.API_AUTH_BASE}`;
+  private readonly TOKEN_KEY = 'ACCESS_TOKEN';
 
   private userSubject: BehaviorSubject<User | null>;
 
@@ -34,8 +36,14 @@ export class AuthService {
       .post<{ accessToken: string }>(`${this.API_AUTH_BASE}/login`, credentials)
       .pipe(tap(({ accessToken }) => this.storeToken(accessToken)))
       .subscribe({
-        next: ({ accessToken }) => this.storeToken,
-        error: (err: Error) => console.log(err),
+        next: ({ accessToken }) => {
+          this.storeToken(accessToken);
+          const { username }: { username: string } = jwtDecode(accessToken);
+          this.userSubject.next({ username });
+        },
+        error: (err: Error) => {
+          console.log(err);
+        },
       });
   }
 
@@ -45,11 +53,17 @@ export class AuthService {
         `${this.API_AUTH_BASE}/sign-up`,
         credentials
       )
-      .pipe(tap(({ accessToken }) => this.storeToken(accessToken)))
       .subscribe({
-        next: () => this.router.navigate(['/login']),
+        next: () => {
+          this.router.navigate(['/login']);
+        },
         error: (err: Error) => console.log(err),
       });
+  }
+
+  logOut(): void {
+    this.clearToken();
+    this.userSubject.next(null);
   }
 
   public get user(): User | null {
@@ -57,6 +71,10 @@ export class AuthService {
   }
 
   storeToken(token: string) {
-    localStorage.setItem('access_token', token);
+    localStorage.setItem(this.TOKEN_KEY, token);
+  }
+
+  private clearToken(): void {
+    localStorage.removeItem(this.TOKEN_KEY);
   }
 }

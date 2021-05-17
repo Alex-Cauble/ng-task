@@ -36,6 +36,7 @@
             "styles": [
               "src/styles.scss"
             ],
+            "allowedCommonJsDependencies": ["jwt-decode"],
             "scripts": []
           },
           "configurations": {
