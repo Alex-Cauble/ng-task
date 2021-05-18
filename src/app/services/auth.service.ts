@@ -31,19 +31,21 @@ export class AuthService {
   }
 
   login(credentials: CredentialsDTO): void {
+    console.log('Login attempt');
     this.http
       .post<{ accessToken: string }>(`${this.API_AUTH_BASE}/login`, credentials)
-      .pipe(tap(({ accessToken }) => this.storeToken(accessToken)))
       .subscribe({
         next: ({ accessToken }) => {
           this.storeToken(accessToken);
           const { username }: { username: string } = jwtDecode(accessToken);
           this.userSubject.next({ username });
+          this.router.navigate(['/task']);
         },
         error: (err: any) => {
           const { message } = err?.error;
           if (message) {
             this.authErrors.next(message);
+            return;
           }
           this.authErrors.next([
             'Unknown Error Occurred',
@@ -70,6 +72,10 @@ export class AuthService {
   logOut(): void {
     this.clearToken();
     this.userSubject.next(null);
+  }
+
+  clearErrors(): void {
+    this.authErrors.next([]);
   }
 
   public get user(): User | null {
