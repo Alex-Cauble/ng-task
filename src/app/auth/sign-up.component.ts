@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
@@ -7,27 +7,71 @@ import { AuthService } from '../services/auth.service';
   selector: 'app-sign-up',
   template: `
     <form [formGroup]="form" class="card p-6" (ngSubmit)="submit()">
-      <input
-        placeholder="username"
-        class="input is-info"
-        type="text"
-        autocomplete="off"
-        name="username"
-      />
-      <input
-        class="input is-info"
-        type="password"
-        placeholder="password"
-        autocomplete="new-password"
-        name="password"
-      />
-      <input
-        class="input is-info"
-        type="password"
-        placeholder="confirm password"
-        autocomplete="new-password"
-        name="password2"
-      />
+      <div class="field">
+        <label class="label">Username</label>
+        <div class="control has-icons-left has-icons-right">
+          <input
+            formControlName="username"
+            class="input is-info"
+            type="text"
+            autocomplete="username"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+          <span
+            *ngIf="!username.errors && username.touched"
+            class="icon has-text-success is-small is-right"
+          >
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control has-icons-left">
+          <input
+            formControlName="username"
+            class="input is-info"
+            type="password"
+            autocomplete="new-password"
+            name="password"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+          <span
+            *ngIf="!username.errors && username.touched"
+            class="icon has-text-success is-small is-right"
+          >
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="confirmPassword">Confirm Password</label>
+        <div class="control has-icons-left">
+          <input
+            formControlName="confirmPassword"
+            class="input is-info"
+            type="password"
+            autocomplete="new-password"
+            name="confirmPassword"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+          <span
+            *ngIf="!username.errors && username.touched"
+            class="icon has-text-success is-small is-right"
+          >
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+      </div>
+
       <button class="button is-primary" type="submit" [disabled]="!form.valid">
         Register
       </button>
@@ -70,7 +114,7 @@ export class SignUpComponent implements OnInit {
     this.form = this.fb.group({
       username: '',
       password: '',
-      password2: '',
+      confirmPassword: '',
     });
 
     this.errors$ = this.auth.authErrors$;
@@ -80,5 +124,17 @@ export class SignUpComponent implements OnInit {
     const cred = this.form.value;
     delete cred.password2;
     this.auth.register(cred);
+  }
+
+  get username(): AbstractControl {
+    return this.form.controls['username'];
+  }
+
+  get password(): AbstractControl {
+    return this.form.controls['password'];
+  }
+
+  get confirmPassword(): AbstractControl {
+    return this.form.controls['confirmPassword'];
   }
 }

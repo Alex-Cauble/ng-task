@@ -19,12 +19,6 @@ import { AuthService } from '../services/auth.service';
           <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
-          <span
-            *ngIf="!username.errors && username.touched"
-            class="icon has-text-success is-small is-right"
-          >
-            <i class="fas fa-check"></i>
-          </span>
         </div>
       </div>
       <div class="field">
