@@ -3,27 +3,30 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-add-task',
   template: `
-    <form>
+    <form class="card p-4">
       <div class="field">
-        <label class="label">Name</label>
         <div class="control">
-          <input class="input" type="text" placeholder="e.g Alex Smith" />
+          <input class="input" type="text" placeholder="Title" />
         </div>
       </div>
 
       <div class="field">
-        <label class="label">Email</label>
         <div class="control">
-          <input
-            class="input"
-            type="email"
-            placeholder="e.g. alexsmith@gmail.com"
-          />
+          <input class="input" type="email" placeholder="Details" />
         </div>
       </div>
+      <button class="button is-button is-primary is-fullwidth">Add Task</button>
     </form>
   `,
-  styles: [],
+  styles: [
+    `
+      form {
+        display: block;
+        max-width: 800px;
+        margin: 25px auto;
+      }
+    `,
+  ],
 })
 export class AddTaskComponent implements OnInit {
   constructor() {}
