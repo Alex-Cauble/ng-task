@@ -39,7 +39,7 @@ export class TaskListItemComponent implements OnInit {
     status: TaskStatus.OPEN,
   };
 
-  options: Array<{ value: string; text: string }> = [
+  options = [
     { value: 'OPEN', text: 'Open' },
     { value: 'IN_PROGRESS', text: 'In Progress' },
     { value: 'CLOSED', text: 'Closed' },
