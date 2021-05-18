@@ -11,8 +11,8 @@ import { Component, OnInit } from '@angular/core';
     `
       .center {
         display: block;
-        max-width: 800px !important;
-        margin: 0 auto !important;
+        max-width: 800px;
+        margin: 0 auto;
       }
     `,
   ],
