@@ -75,9 +75,10 @@ import { AuthService } from '../services/auth.service';
 
       input {
         margin-bottom: 20px;
-        &::placeholder {
-          text-transform: capitalize;
-        }
+      }
+
+      input::placeholder {
+        text-transform: capitalize;
       }
     `,
   ],
