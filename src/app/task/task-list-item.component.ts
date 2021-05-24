@@ -6,9 +6,9 @@ import { TaskStatus } from '../types/task-status.enum';
   selector: 'app-task-list-item',
   template: `
     <div class="row row-1">
-      <h4 class="is-size-4 is-capitalized has-text-weight-semibold">
+      <h5 class="is-size-4 is-capitalized has-text-weight-semibold">
         {{ task.title }}
-      </h4>
+      </h5>
       <div class="select">
         <select>
           <option *ngFor="let option of options" [value]="option.value">
@@ -32,12 +32,7 @@ import { TaskStatus } from '../types/task-status.enum';
   ],
 })
 export class TaskListItemComponent implements OnInit {
-  @Input() task: Task = {
-    id: 1,
-    title: 'Test Title',
-    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quam error nesciunt incidunt voluptatibus aperiam expedita `,
-    status: TaskStatus.OPEN,
-  };
+  @Input() task!: Task;
 
   options = [
     { value: 'OPEN', text: 'Open' },

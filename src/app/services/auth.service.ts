@@ -71,6 +71,7 @@ export class AuthService {
   logOut(): void {
     this.clearToken();
     this.userSubject.next(null);
+    this.router.navigate(['auth', 'login']);
   }
 
   clearErrors(): void {

@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-add-task',
   template: `
-    <form class="card p-4">
+    <form class="card p-2">
+      <div class="row">
+        <span class="grow"></span>
+        <i (click)="doClose()" class="fas fa-window-close fa-lg"></i>
+      </div>
       <div class="field">
         <div class="control">
           <input class="input" type="text" placeholder="Title" />
@@ -25,11 +29,33 @@ import { Component, OnInit } from '@angular/core';
         max-width: 800px;
         margin: 25px auto;
       }
+      .row {
+        display: flex;
+      }
+
+      i {
+        padding: 10px;
+        color: red;
+      }
+
+      i:hover {
+        color: inherit;
+      }
+
+      .grow {
+        flex: 1;
+      }
     `,
   ],
 })
 export class AddTaskComponent implements OnInit {
+  @Output() close = new EventEmitter();
+
   constructor() {}
+
+  doClose(): void {
+    this.close.emit('close');
+  }
 
   ngOnInit(): void {}
 }

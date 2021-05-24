@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -26,44 +27,31 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: [
     `
+      a {
+        color: white;
+      }
+
       i {
         padding: 10px;
-      }
-
-      a {
-        display: inline-block;
-        /* border-bottom: 3px solid white; */
-      }
-
-      a > span {
-        opacity: 0;
-      }
-
-      a:hover > span {
-        transition: opacity 300 ease-in-out;
-        opacity: 1;
-
-        transition: transform 300 ease-in-out;
-        transform: scaleX(0);
-      }
-
-      @keyframes fadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
       }
     `,
   ],
 })
 export class NavbarComponent {
-  constructor() {}
+  @Output() showAddTaskEvent = new EventEmitter();
+  @Output() showSearchTaskEvent = new EventEmitter();
 
-  logout() {}
+  constructor(private auth: AuthService) {}
 
-  showAddTask() {}
+  logout() {
+    this.auth.logOut();
+  }
 
-  showSearchTask() {}
+  showAddTask() {
+    this.showAddTaskEvent.emit('addTask');
+  }
+
+  showSearchTask() {
+    this.showSearchTaskEvent.emit('searchTask');
+  }
 }

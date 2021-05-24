@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import TaskFilterDTO from '../types/task-filter.dto';
+import Task from 'src/app/class/task.class';
 import { TaskStatus } from '../types/task-status.enum';
 
 @Injectable({
@@ -10,10 +11,23 @@ import { TaskStatus } from '../types/task-status.enum';
 })
 export class TaskService {
   readonly API_BASE = `${environment.API_URL}/task`;
-  private taskSubject: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>(
-    []
-  );
-  tasks$ = this.taskSubject.asObservable();
+
+  // prettier-ignore
+  private taskSubject: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([
+    {
+      id: 1,
+      title: 'Test Title',
+      description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quam error nesciunt incidunt voluptatibus aperiam expedita `,
+      status: TaskStatus.OPEN,
+    },
+    {
+      id: 2,
+      title: 'Test Title',
+      description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quam error nesciunt incidunt voluptatibus aperiam expedita `,
+      status: TaskStatus.OPEN,
+    },
+  ]);
+  public tasks$ = this.taskSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 

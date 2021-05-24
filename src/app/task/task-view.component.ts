@@ -1,15 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-task-view',
   template: `
-    <app-navbar></app-navbar>
-    <app-add-task></app-add-task>
-    <app-task-list></app-task-list>
+    <app-navbar
+      (showSearchTaskEvent)="showSearchTask()"
+      (showAddTaskEvent)="showAddTask()"
+    >
+    </app-navbar>
+
+    <app-search-task
+      class="pt-2"
+      *ngIf="isSearchTaskShown"
+      (close)="closeAddTask()"
+    >
+    </app-search-task>
+
+    <app-add-task class="pt-2" *ngIf="isAddTaskShown" (close)="closeAddTask()">
+    </app-add-task>
+
+    <app-task-list class="p-2"> </app-task-list>
   `,
 })
-export class TaskViewComponent implements OnInit {
+export class TaskViewComponent {
+  isAddTaskShown = false;
+  isSearchTaskShown = false;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  showAddTask() {
+    this.isAddTaskShown = true;
+  }
+
+  closeAddTask() {
+    this.isAddTaskShown = false;
+  }
+
+  showSearchTask() {
+    this.isSearchTaskShown = true;
+  }
+
+  closeSearchTask() {
+    this.isSearchTaskShown = false;
+  }
 }

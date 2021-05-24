@@ -1,10 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TaskService } from '../services/task.service';
+import Task from 'src/app/class/task.class';
 
 @Component({
   selector: 'app-task-list',
   template: `
     <div class="card p-4 center">
-      <app-task-list-item></app-task-list-item>
+      <app-task-list-item
+        class="list-item"
+        [task]="task"
+        *ngFor="let task of tasks$ | async"
+      >
+      </app-task-list-item>
     </div>
   `,
   styles: [
@@ -14,11 +22,15 @@ import { Component, OnInit } from '@angular/core';
         max-width: 800px;
         margin: 0 auto;
       }
+
+      app-task-list-item {
+        background-color: #2160c4;
+      }
     `,
   ],
 })
-export class TaskListComponent implements OnInit {
-  constructor() {}
+export class TaskListComponent {
+  tasks$: Observable<Task[]> = this.taskService.tasks$;
 
-  ngOnInit(): void {}
+  constructor(private taskService: TaskService) {}
 }
