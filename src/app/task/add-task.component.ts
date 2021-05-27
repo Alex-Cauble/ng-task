@@ -3,7 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-add-task',
   template: `
-    <form class="card p-2">
+    <form class="card p-4">
       <div class="grid-header">
         <div class="spacer-div"></div>
         <h4>Add Task</h4>

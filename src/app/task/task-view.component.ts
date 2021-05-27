@@ -16,10 +16,10 @@ import { Component } from '@angular/core';
     >
     </app-search-task> -->
 
-    <app-add-task class="pt-2" *ngIf="isAddTaskShown" (close)="closeAddTask()">
+    <app-add-task class="mt-2" *ngIf="isAddTaskShown" (close)="closeAddTask()">
     </app-add-task>
 
-    <app-task-list class="p-2"> </app-task-list>
+    <app-task-list class="mt-2"> </app-task-list>
   `,
 })
 export class TaskViewComponent {
