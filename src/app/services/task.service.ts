@@ -22,7 +22,7 @@ export class TaskService {
     },
     {
       id: 2,
-      title: 'Test Title',
+      title: 'Testier Title',
       description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quam error nesciunt incidunt voluptatibus aperiam expedita `,
       status: TaskStatus.OPEN,
     },

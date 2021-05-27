@@ -62,7 +62,7 @@ export class AuthService {
       )
       .subscribe({
         next: () => {
-          this.router.navigate(['/login']);
+          this.router.navigate(['auth', 'login']);
         },
         error: (err: Error) => console.log(err),
       });
@@ -76,6 +76,23 @@ export class AuthService {
 
   clearErrors(): void {
     this.authErrors.next([]);
+  }
+
+  public get isLoggedIn(): boolean {
+    const token = localStorage.getItem(this.TOKEN_KEY);
+
+    if (!token) return false;
+
+    const { username, exp }: { username: string; exp: string } =
+      jwtDecode(token);
+    this.userSubject.next({ username });
+    const now = Date.now();
+    const tokenExpirationDate = new Date(exp).getDate();
+
+    if (tokenExpirationDate > now) {
+      return true;
+    }
+    return false;
   }
 
   public get user(): User | null {

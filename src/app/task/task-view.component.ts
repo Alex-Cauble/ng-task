@@ -9,12 +9,12 @@ import { Component } from '@angular/core';
     >
     </app-navbar>
 
-    <app-search-task
+    <!-- <app-search-task
       class="pt-2"
       *ngIf="isSearchTaskShown"
       (close)="closeAddTask()"
     >
-    </app-search-task>
+    </app-search-task> -->
 
     <app-add-task class="pt-2" *ngIf="isAddTaskShown" (close)="closeAddTask()">
     </app-add-task>

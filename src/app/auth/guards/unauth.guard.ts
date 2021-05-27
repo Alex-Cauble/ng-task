@@ -8,8 +8,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UnauthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) {}
   canActivate(): boolean {
-    if (!!this.auth.user) {
+    if (!this.auth.isLoggedIn) {
       this.router.navigate(['/task']);
+      return false;
     }
     return true;
   }
