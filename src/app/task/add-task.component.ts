@@ -4,9 +4,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   selector: 'app-add-task',
   template: `
     <form class="card p-2">
-      <div class="row">
-        <span class="grow"></span>
-        <i (click)="doClose()" class="fas fa-window-close fa-lg"></i>
+      <div class="grid-header">
+        <div class="spacer-div"></div>
+        <h4>Add Task</h4>
+        <i (click)="doClose()" class="fas fa-times-circle fa-2x"></i>
       </div>
       <div class="field">
         <div class="control">
@@ -29,21 +30,28 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
         max-width: 800px;
         margin: 25px auto;
       }
-      .row {
-        display: flex;
+
+      .grid-header {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+      }
+
+      h4 {
+        align-self: center;
+        justify-self: center;
+        font-weight: 600;
+        font-size: 1.5rem;
       }
 
       i {
         padding: 10px;
+        justify-self: end;
+        align-self: start;
         color: red;
       }
 
       i:hover {
         color: inherit;
-      }
-
-      .grow {
-        flex: 1;
       }
     `,
   ],
